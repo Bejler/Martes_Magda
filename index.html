@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Martes de Pololeo - Magda</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        body { margin: 0; background: #141414; color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        .screen { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; z-index: 10; }
+        .hidden { display: none !important; }
+
+        /* Loader Bar Centrada */
+        .loader-wrapper { display: flex; flex-direction: column; align-items: center; }
+        .netflix-logo { color: #E50914; font-family: 'Bebas Neue'; font-size: 4rem; letter-spacing: -2px; margin-bottom: 20px; }
+        .loader-bar-container { width: 250px; height: 4px; background: #333; border-radius: 4px; overflow: hidden; }
+        .loader-bar { height: 100%; width: 50%; background: #E50914; animation: loading 2s infinite ease-in-out; position: relative; }
+        @keyframes loading { from { left: -50%; } to { left: 100%; } }
+
+        /* Perfil (Dimensiones Originales) */
+        .profile-card { cursor: pointer; z-index: 20; }
+        .profile-card img { width: 160px; height: 160px; border-radius: 5px; border: 3px solid transparent; transition: 0.3s; object-fit: cover; }
+        .profile-card:hover img { border-color: white; transform: scale(1.05); }
+
+        /* Slider */
+        .slider { position: fixed; inset: 0; z-index: -1; }
+        .slider::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, #141414 15%, transparent 60%); }
+        .slide { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.5s ease-in-out; }
+        .slide.active { opacity: 0.4; }
+
+        /* Contenido */
+        .content-overlay { width: 90%; max-width: 500px; z-index: 20; }
+        .brand-tag { font-size: 0.7rem; font-weight: 900; color: #808080; letter-spacing: 2px; }
+        .main-title { font-size: 2.5rem; font-weight: 900; margin: 10px 0 30px; }
+
+        /* Movie Cards Glassmorphism */
+        .movie-card { background: rgba(35, 35, 35, 0.7); backdrop-filter: blur(10px); padding: 20px; border-radius: 8px; margin-bottom: 15px; text-align: left; border-left: 5px solid #E50914; cursor: pointer; transition: 0.3s; }
+        .movie-card:hover { transform: scale(1.03); background: rgba(50, 50, 50, 0.9); }
+        .badge { background: #E50914; font-size: 0.7rem; padding: 3px 7px; border-radius: 3px; font-weight: bold; display: inline-block; margin-bottom: 5px; }
+
+        /* Modal */
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 1000; display: flex; align-items: center; justify-content: center; }
+        .glass { background: rgba(25, 25, 25, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); }
+        .modal-content { padding: 40px; width: 85%; max-width: 400px; border-radius: 12px; position: relative; text-align: left; }
+        .meta { color: #46d369; font-weight: bold; margin: 10px 0; font-size: 0.9rem; }
+
+        /* Botones de Opciones */
+        .options-btn { background: rgba(255,255,255,0.1); color: white; border: none; padding: 12px; width: 100%; margin-top: 10px; border-radius: 4px; cursor: pointer; text-align: left; transition: 0.2s; font-family: inherit; }
+        .options-btn:hover { background: rgba(255,255,255,0.2); padding-left: 20px; }
+        .back-btn { background: transparent; color: #E50914; font-weight: bold; border: 1px solid #E50914; text-align: center; margin-top: 15px; width: 100%; padding: 10px; border-radius: 4px; cursor: pointer; }
+
+        .btn-confirm { background: white; color: black; border: none; padding: 15px; width: 100%; font-weight: 900; border-radius: 4px; margin-top: 25px; cursor: pointer; }
+        .close { position: absolute; right: 20px; top: 10px; font-size: 30px; cursor: pointer; }
+
+        /* Pantalla Final */
+        .te-amo { font-family: 'Bebas Neue'; font-size: 5rem; color: #E50914; margin: 0; }
+        .final-text { font-size: 1.2rem; color: #ccc; }
+    </style>
+</head>
+<body>
+
+<audio id="tudum-sound" src="https://www.myinstants.com/media/sounds/netflix-tudum.mp3"></audio>
+<audio id="bg-music" loop src="https://www.bensound.com/bensound-music/bensound-love.mp3"></audio>
+
+<div id="loading-screen" class="screen">
+  <div class="loader-wrapper">
+    <h1 class="netflix-logo">MARTES DE POLOLEO</h1>
+    <div class="loader-bar-container"><div class="loader-bar"></div></div>
+  </div>
+</div>
+
+<div id="profile-screen" class="screen hidden">
+  <h1 class="profile-title">¿Quién recibirá regaloneo hoy?</h1>
+  <div class="profile-card" onclick="showHome()">
+    <img src="https://i.postimg.cc/QCjKjZPg/Whats_App_Image_2025_12_29_at_12_06_34(1).jpg" alt="Magda">
+    <p>Magda</p>
+  </div>
+</div>
+
+<div id="home-screen" class="screen hidden">
+  <div class="slider">
+    <img src="https://i.postimg.cc/vTGxGwj5/Whats_App_Image_2025_12_29_at_12_06_34.jpg" class="slide active">
+    <img src="https://i.postimg.cc/sx3G3C8p/Whats_App_Image_2025_12_29_at_12_06_35.jpg" class="slide">
+    <img src="https://i.postimg.cc/QCjKjZPg/Whats_App_Image_2025_12_29_at_12_06_34(1).jpg" class="slide">
+  </div>
+  
+  <div class="content-overlay">
+    <div class="top-info">
+      <span class="brand-tag">UNA PRODUCCIÓN ORIGINAL</span>
+    </div>
+    <h2 class="main-title">¿Qué capítulo viviremos hoy?</h2>
+    <div class="categories">
+      <div class="movie-card" onclick="openPlan('completo')">
+        <div class="badge">99% de Match</div>
+        <p class="card-title">Día Completo: Cachagua & Las cujas</p>
+      </div>
+      <div class="movie-card" onclick="openPlan('manana')">
+        <div class="badge">Más buscado</div>
+        <p class="card-title">Solo Mañana: Desayuno & Paseo</p>
+      </div>
+      <div class="movie-card" onclick="openPlan('tarde')">
+        <div class="badge">Especial</div>
+        <p class="card-title">Solo Tarde: Sunset & Piscina</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="detail-modal" class="modal hidden">
+  <div class="modal-content glass">
+    <span class="close" onclick="closeModal()">×</span>
+    <h1 id="plan-title"></h1>
+    <p id="plan-info" class="meta"></p>
+    <p id="plan-desc"></p>
+    <div id="interactive-section"></div>
+    <button class="btn-confirm" id="confirm-btn" onclick="confirmar()">REPRODUCIR CITA</button>
+  </div>
+</div>
+
+<div id="final-scene" class="screen hidden">
+  <h1 class="te-amo">TE AMO NIÑA</h1>
+  <p class="final-text">Tu elección ha sido enviada a producción ❤️</p>
+</div>
+
+<script>
+let selectedPlanFinal = "";
+
+// Pantallas
+setTimeout(() => {
+  document.getElementById('loading-screen').classList.add('hidden');
+  document.getElementById('profile-screen').classList.remove('hidden');
+}, 2500);
+
+function showHome() {
+  document.getElementById('tudum-sound').play();
+  document.getElementById('bg-music').play();
+  document.getElementById('profile-screen').classList.add('hidden');
+  document.getElementById('home-screen').classList.remove('hidden');
+  startSlider();
+}
+
+function startSlider() {
+  let slides = document.querySelectorAll('.slide');
+  let current = 0;
+  setInterval(() => {
+    slides[current].classList.remove('active');
+    current = (current + 1) % slides.length;
+    slides[current].classList.add('active');
+  }, 4000);
+}
+
+function openPlan(tipo) {
+  const modal = document.getElementById('detail-modal');
+  const title = document.getElementById('plan-title');
+  const desc = document.getElementById('plan-desc');
+  const info = document.getElementById('plan-info');
+  const interactive = document.getElementById('interactive-section');
+  
+  modal.classList.remove('hidden');
+  interactive.innerHTML = ""; 
+
+  if(tipo === 'completo') {
+    title.innerText = "Cachagua: Día de Película";
+    info.innerText = "99% Match | 2024 | Full Day";
+    desc.innerText = "Salida 10:30 AM. Paseo por Las Cujas. ¿Cómo prefieres almorzar?";
+    interactive.innerHTML = `
+      <button class="options-btn" onclick="showRestaurants()">🍴 Ver Restaurantes en Cachagua</button>
+      <button class="options-btn" onclick="confirmar('Picnic en Las Cujas')">🧺 Picnic en la arena</button>
+    `;
+  } else if(tipo === 'manana') {
+    title.innerText = "Matiné: Desayuno & Brisa";
+    info.innerText = "Especial | 4 Horas | Mañana";
+    desc.innerText = "Mañana de paseo por Concón. ¿A qué lugar te gustaría desayunar?";
+    interactive.innerHTML = `
+      <button class="options-btn" onclick="showBreakfasts()">☕ Ver opciones de Desayuno</button>
+      <button class="options-btn" onclick="confirmar('Solo Paseo')">🌊 Solo caminar y conversar</button>
+    `;
+  } else if(tipo === 'tarde') {
+    title.innerText = "Especial: Sunset & Chill";
+    info.innerText = "Romance | 6 Horas | Golden Hour";
+    desc.innerText = "Piscina y empanaditas para ver el sunset en Concón.";
+    interactive.innerHTML = `<button class="options-btn" onclick="confirmar('Tarde de Sunset')">🌅 Confirmar Plan de Tarde</button>`;
+  }
+}
+
+function showRestaurants() {
+  const interactive = document.getElementById('interactive-section');
+  interactive.innerHTML = `
+    <p style='color:#E50914; font-weight:bold; margin:15px 0;'>Opciones:</p>
+    <button class="options-btn" onclick="window.open('https://maps.app.goo.gl/FjJcb8Ac2GdD8k4PA')">📍 Siete Olas</button>
+    <button class="options-btn" onclick="window.open('https://maps.app.goo.gl/4Pm6J9sSVaRbevGu7')">📍 Tío Tomate</button>
+    <button class="options-btn" onclick="window.open('https://maps.app.goo.gl/VCddaR6HHqV13bZJ8')">📍 Alazán</button>
+    <button class="options-btn" onclick="window.open('https://maps.app.goo.gl/XEYZJiC7Ua4P2ojF8')">📍 Rocca Rolls</button>
+    <button class="back-btn" onclick="openPlan('completo')">⬅️ Volver</button>
+  `;
+}
+
+function showBreakfasts() {
+  const interactive = document.getElementById('interactive-section');
+  interactive.innerHTML = `
+    <p style='color:#E50914; font-weight:bold; margin:15px 0;'>Lugares:</p>
+    <button class="options-btn" onclick="window.open('https://maps.app.goo.gl/tYkGB4yceaA9mCQ58')">📍 Le Mint</button>
+    <button class="options-btn" onclick="window.open('https://maps.app.goo.gl/ZvfqCANWus7zWBdz6')">📍 Bali Coffee House</button>
+    <button class="options-btn" onclick="window.open('https://maps.app.goo.gl/JVZ3Fh7qGKTWCqUQ6')">📍 Bakery Lynch</button>
+    <button class="back-btn" onclick="openPlan('manana')">⬅️ Volver</button>
+  `;
+}
+
+function closeModal() { document.getElementById('detail-modal').classList.add('hidden'); }
+
+function confirmar(plan) {
+  const btn = document.getElementById('confirm-btn');
+  const sel = plan || "Plan de Pololeo";
+  btn.innerText = "RESERVANDO...";
+  
+  setTimeout(() => {
+    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, shapes: ['heart'], colors: ['#E50914', '#ffffff'] });
+    
+    // WhatsApp
+    const msg = encodeURIComponent(`¡Hola! Magda ha confirmado el plan: ${sel}. ❤️`);
+    window.open(`https://wa.me/56933755577?text=${msg}`);
+    
+    document.getElementById('detail-modal').classList.add('hidden');
+    document.getElementById('home-screen').classList.add('hidden');
+    document.getElementById('final-scene').classList.remove('hidden');
+  }, 1500);
+}
+</script>
+</body>
+</html>
