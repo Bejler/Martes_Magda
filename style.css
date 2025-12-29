@@ -1,0 +1,45 @@
+body { margin: 0; background: #141414; color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+.screen { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; z-index: 10; }
+.hidden { display: none !important; }
+
+/* Loader Bar Centrada */
+.loader-wrapper { display: flex; flex-direction: column; align-items: center; }
+.netflix-logo { color: #E50914; font-family: 'Bebas Neue'; font-size: 4rem; letter-spacing: -2px; margin-bottom: 20px; }
+.loader-bar-container { width: 250px; height: 4px; background: #333; border-radius: 4px; overflow: hidden; }
+.loader-bar { height: 100%; width: 50%; background: #E50914; animation: loading 2s infinite ease-in-out; position: relative; }
+@keyframes loading { from { left: -50%; } to { left: 100%; } }
+
+/* Perfil (Dimensiones Originales) */
+.profile-card { cursor: pointer; z-index: 20; }
+.profile-card img { width: 160px; height: 160px; border-radius: 5px; border: 3px solid transparent; transition: 0.3s; object-fit: cover; }
+.profile-card:hover img { border-color: white; transform: scale(1.05); }
+
+/* Slider */
+.slider { position: fixed; inset: 0; z-index: -1; }
+.slider::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, #141414 15%, transparent 60%); }
+.slide { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.5s ease-in-out; }
+.slide.active { opacity: 0.4; }
+
+/* Contenido */
+.content-overlay { width: 90%; max-width: 500px; z-index: 20; }
+.brand-tag { font-size: 0.7rem; font-weight: 900; color: #808080; letter-spacing: 2px; }
+.main-title { font-size: 2.5rem; font-weight: 900; margin: 10px 0 30px; }
+
+/* Movie Cards Glassmorphism */
+.movie-card { background: rgba(35, 35, 35, 0.7); backdrop-filter: blur(10px); padding: 20px; border-radius: 8px; margin-bottom: 15px; text-align: left; border-left: 5px solid #E50914; cursor: pointer; transition: 0.3s; }
+.movie-card:hover { transform: scale(1.03); background: rgba(50, 50, 50, 0.9); }
+.badge { background: #E50914; font-size: 0.7rem; padding: 3px 7px; border-radius: 3px; font-weight: bold; display: inline-block; margin-bottom: 5px; }
+
+/* Modal */
+.modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 1000; display: flex; align-items: center; justify-content: center; }
+.glass { background: rgba(25, 25, 25, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); }
+.modal-content { padding: 40px; width: 85%; max-width: 400px; border-radius: 12px; position: relative; text-align: left; }
+.meta { color: #46d369; font-weight: bold; margin: 10px 0; font-size: 0.9rem; }
+
+/* Botones de Opciones */
+.options-btn { background: rgba(255,255,255,0.1); color: white; border: none; padding: 12px; width: 100%; margin-top: 10px; border-radius: 4px; cursor: pointer; text-align: left; transition: 0.2s; }
+.options-btn:hover { background: rgba(255,255,255,0.2); padding-left: 20px; }
+.back-btn { background: transparent; color: #E50914; font-weight: bold; border: 1px solid #E50914; text-align: center; margin-top: 15px; }
+
+.btn-confirm { background: white; color: black; border: none; padding: 15px; width: 100%; font-weight: 900; border-radius: 4px; margin-top: 25px; cursor: pointer; }
+.te-amo { font-family: 'Bebas Neue'; font-size: 5rem; color: #E50914; }
