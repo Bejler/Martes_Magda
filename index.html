@@ -20,44 +20,47 @@
         .loader-bar { height: 100%; width: 50%; background: #E50914; animation: loading 2s infinite ease-in-out; position: relative; }
         @keyframes loading { from { left: -50%; } to { left: 100%; } }
 
-        /* Perfil (Dimensiones Originales) */
+        /* Perfil Original */
         .profile-card { cursor: pointer; z-index: 20; }
         .profile-card img { width: 160px; height: 160px; border-radius: 5px; border: 3px solid transparent; transition: 0.3s; object-fit: cover; }
         .profile-card:hover img { border-color: white; transform: scale(1.05); }
 
-        /* Slider */
+        /* Slider Background */
         .slider { position: fixed; inset: 0; z-index: -1; }
         .slider::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, #141414 15%, transparent 60%); }
         .slide { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.5s ease-in-out; }
         .slide.active { opacity: 0.4; }
 
-        /* Contenido */
+        /* Contenido Principal */
         .content-overlay { width: 90%; max-width: 500px; z-index: 20; }
         .brand-tag { font-size: 0.7rem; font-weight: 900; color: #808080; letter-spacing: 2px; }
         .main-title { font-size: 2.5rem; font-weight: 900; margin: 10px 0 30px; }
 
-        /* Movie Cards Glassmorphism */
+        /* Movie Cards Estilo Netflix */
         .movie-card { background: rgba(35, 35, 35, 0.7); backdrop-filter: blur(10px); padding: 20px; border-radius: 8px; margin-bottom: 15px; text-align: left; border-left: 5px solid #E50914; cursor: pointer; transition: 0.3s; }
         .movie-card:hover { transform: scale(1.03); background: rgba(50, 50, 50, 0.9); }
         .badge { background: #E50914; font-size: 0.7rem; padding: 3px 7px; border-radius: 3px; font-weight: bold; display: inline-block; margin-bottom: 5px; }
 
-        /* Modal */
+        /* Modal Glassmorphism */
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 1000; display: flex; align-items: center; justify-content: center; }
-        .glass { background: rgba(25, 25, 25, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); }
+        .glass { background: rgba(25, 25, 25, 0.85); backdrop-filter: blur(25px); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
         .modal-content { padding: 40px; width: 85%; max-width: 400px; border-radius: 12px; position: relative; text-align: left; }
         .meta { color: #46d369; font-weight: bold; margin: 10px 0; font-size: 0.9rem; }
 
         /* Botones de Opciones */
-        .options-btn { background: rgba(255,255,255,0.1); color: white; border: none; padding: 12px; width: 100%; margin-top: 10px; border-radius: 4px; cursor: pointer; text-align: left; transition: 0.2s; font-family: inherit; }
+        .options-btn { background: rgba(255,255,255,0.1); color: white; border: none; padding: 14px; width: 100%; margin-top: 10px; border-radius: 4px; cursor: pointer; text-align: left; transition: 0.2s; font-family: inherit; font-size: 0.95rem; }
         .options-btn:hover { background: rgba(255,255,255,0.2); padding-left: 20px; }
         .back-btn { background: transparent; color: #E50914; font-weight: bold; border: 1px solid #E50914; text-align: center; margin-top: 15px; width: 100%; padding: 10px; border-radius: 4px; cursor: pointer; }
 
-        .btn-confirm { background: white; color: black; border: none; padding: 15px; width: 100%; font-weight: 900; border-radius: 4px; margin-top: 25px; cursor: pointer; }
-        .close { position: absolute; right: 20px; top: 10px; font-size: 30px; cursor: pointer; }
+        .btn-confirm { background: white; color: black; border: none; padding: 16px; width: 100%; font-weight: 900; border-radius: 4px; margin-top: 25px; cursor: pointer; transition: 0.2s; text-transform: uppercase; letter-spacing: 1px; }
+        .btn-confirm:hover { background: #E50914; color: white; }
+        .close { position: absolute; right: 20px; top: 15px; font-size: 30px; cursor: pointer; color: #888; }
+        .close:hover { color: white; }
 
-        /* Pantalla Final */
-        .te-amo { font-family: 'Bebas Neue'; font-size: 5rem; color: #E50914; margin: 0; }
-        .final-text { font-size: 1.2rem; color: #ccc; }
+        /* Pantalla Final Easter Egg */
+        .te-amo { font-family: 'Bebas Neue'; font-size: 5.5rem; color: #E50914; margin: 0; animation: pulseHeart 2s infinite; }
+        .final-text { font-size: 1.2rem; color: #ccc; margin-top: 20px; font-weight: 300; }
+        @keyframes pulseHeart { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
     </style>
 </head>
 <body>
@@ -88,9 +91,7 @@
   </div>
   
   <div class="content-overlay">
-    <div class="top-info">
-      <span class="brand-tag">UNA PRODUCCIÓN ORIGINAL</span>
-    </div>
+    <div class="top-info"><span class="brand-tag">UNA PRODUCCIÓN ORIGINAL</span></div>
     <h2 class="main-title">¿Qué capítulo viviremos hoy?</h2>
     <div class="categories">
       <div class="movie-card" onclick="openPlan('completo')">
@@ -116,7 +117,7 @@
     <p id="plan-info" class="meta"></p>
     <p id="plan-desc"></p>
     <div id="interactive-section"></div>
-    <button class="btn-confirm" id="confirm-btn" onclick="confirmar()">REPRODUCIR CITA</button>
+    <button class="btn-confirm" id="confirm-btn">REPRODUCIR CITA</button>
   </div>
 </div>
 
@@ -126,17 +127,17 @@
 </div>
 
 <script>
-let selectedPlanFinal = "";
+let currentSelectionGlobal = "Plan de Pololeo";
 
-// Pantallas
+// Manejo de Inicio
 setTimeout(() => {
   document.getElementById('loading-screen').classList.add('hidden');
   document.getElementById('profile-screen').classList.remove('hidden');
 }, 2500);
 
 function showHome() {
-  document.getElementById('tudum-sound').play();
-  document.getElementById('bg-music').play();
+  document.getElementById('tudum-sound').play().catch(()=>{});
+  document.getElementById('bg-music').play().catch(()=>{});
   document.getElementById('profile-screen').classList.add('hidden');
   document.getElementById('home-screen').classList.remove('hidden');
   startSlider();
@@ -152,48 +153,56 @@ function startSlider() {
   }, 4000);
 }
 
+// Estructura de Sub-menús Original
 function openPlan(tipo) {
   const modal = document.getElementById('detail-modal');
   const title = document.getElementById('plan-title');
   const desc = document.getElementById('plan-desc');
   const info = document.getElementById('plan-info');
   const interactive = document.getElementById('interactive-section');
+  const confirmBtn = document.getElementById('confirm-btn');
   
   modal.classList.remove('hidden');
   interactive.innerHTML = ""; 
 
   if(tipo === 'completo') {
     title.innerText = "Cachagua: Día de Película";
-    info.innerText = "99% Match | 2024 | Full Day";
+    info.innerText = "99% Match | 2025 | Full Day";
     desc.innerText = "Salida 10:30 AM. Paseo por Las Cujas. ¿Cómo prefieres almorzar?";
+    currentSelectionGlobal = "Día Completo Cachagua";
     interactive.innerHTML = `
       <button class="options-btn" onclick="showRestaurants()">🍴 Ver Restaurantes en Cachagua</button>
-      <button class="options-btn" onclick="confirmar('Picnic en Las Cujas')">🧺 Picnic en la arena</button>
+      <button class="options-btn" onclick="setSubPlan('Picnic en Las Cujas')">🧺 Picnic en la arena</button>
     `;
   } else if(tipo === 'manana') {
     title.innerText = "Matiné: Desayuno & Brisa";
     info.innerText = "Especial | 4 Horas | Mañana";
     desc.innerText = "Mañana de paseo por Concón. ¿A qué lugar te gustaría desayunar?";
+    currentSelectionGlobal = "Matiné Desayuno";
     interactive.innerHTML = `
       <button class="options-btn" onclick="showBreakfasts()">☕ Ver opciones de Desayuno</button>
-      <button class="options-btn" onclick="confirmar('Solo Paseo')">🌊 Solo caminar y conversar</button>
+      <button class="options-btn" onclick="setSubPlan('Solo Paseo por Concón')">🌊 Solo caminar y conversar</button>
     `;
   } else if(tipo === 'tarde') {
     title.innerText = "Especial: Sunset & Chill";
     info.innerText = "Romance | 6 Horas | Golden Hour";
     desc.innerText = "Piscina y empanaditas para ver el sunset en Concón.";
-    interactive.innerHTML = `<button class="options-btn" onclick="confirmar('Tarde de Sunset')">🌅 Confirmar Plan de Tarde</button>`;
+    currentSelectionGlobal = "Tarde de Sunset";
+    interactive.innerHTML = `<p style='color:#aaa;'>Plan seleccionado correctamente.</p>`;
   }
+
+  // Evento del botón de confirmación limpio
+  confirmBtn.onclick = () => ejecutarConfirmacion(currentSelectionGlobal);
 }
 
 function showRestaurants() {
   const interactive = document.getElementById('interactive-section');
   interactive.innerHTML = `
-    <p style='color:#E50914; font-weight:bold; margin:15px 0;'>Opciones:</p>
-    <button class="options-btn" onclick="window.open('https://maps.app.goo.gl/FjJcb8Ac2GdD8k4PA')">📍 Siete Olas</button>
-    <button class="options-btn" onclick="window.open('https://maps.app.goo.gl/4Pm6J9sSVaRbevGu7')">📍 Tío Tomate</button>
-    <button class="options-btn" onclick="window.open('https://maps.app.goo.gl/VCddaR6HHqV13bZJ8')">📍 Alazán</button>
-    <button class="options-btn" onclick="window.open('https://maps.app.goo.gl/XEYZJiC7Ua4P2ojF8')">📍 Rocca Rolls</button>
+    <p style='color:#E50914; font-weight:bold; margin:15px 0;'>Selecciona para ver en Maps:</p>
+    <button class="options-btn" onclick="window.open('https://maps.app.goo.gl/FjJcb8Ac2GdD8k4PA', '_blank')">📍 Siete Olas</button>
+    <button class="options-btn" onclick="window.open('https://maps.app.goo.gl/4Pm6J9sSVaRbevGu7', '_blank')">📍 Tío Tomate</button>
+    <button class="options-btn" onclick="window.open('https://maps.app.goo.gl/VCddaR6HHqV13bZJ8', '_blank')">📍 Alazán</button>
+    <button class="options-btn" onclick="window.open('https://maps.app.goo.gl/XEYZJiC7Ua4P2ojF8', '_blank')">📍 Rocca Rolls</button>
     <button class="back-btn" onclick="openPlan('completo')">⬅️ Volver</button>
   `;
 }
@@ -201,32 +210,47 @@ function showRestaurants() {
 function showBreakfasts() {
   const interactive = document.getElementById('interactive-section');
   interactive.innerHTML = `
-    <p style='color:#E50914; font-weight:bold; margin:15px 0;'>Lugares:</p>
-    <button class="options-btn" onclick="window.open('https://maps.app.goo.gl/tYkGB4yceaA9mCQ58')">📍 Le Mint</button>
-    <button class="options-btn" onclick="window.open('https://maps.app.goo.gl/ZvfqCANWus7zWBdz6')">📍 Bali Coffee House</button>
-    <button class="options-btn" onclick="window.open('https://maps.app.goo.gl/JVZ3Fh7qGKTWCqUQ6')">📍 Bakery Lynch</button>
+    <p style='color:#E50914; font-weight:bold; margin:15px 0;'>Selecciona para ver en Maps:</p>
+    <button class="options-btn" onclick="window.open('https://maps.app.goo.gl/tYkGB4yceaA9mCQ58', '_blank')">📍 Le Mint</button>
+    <button class="options-btn" onclick="window.open('https://maps.app.goo.gl/ZvfqCANWus7zWBdz6', '_blank')">📍 Bali Coffee House</button>
+    <button class="options-btn" onclick="window.open('https://maps.app.goo.gl/JVZ3Fh7qGKTWCqUQ6', '_blank')">📍 Bakery Lynch</button>
     <button class="back-btn" onclick="openPlan('manana')">⬅️ Volver</button>
   `;
 }
 
+function setSubPlan(nombre) {
+    currentSelectionGlobal = nombre;
+    alert("Opción seleccionada: " + nombre);
+}
+
 function closeModal() { document.getElementById('detail-modal').classList.add('hidden'); }
 
-function confirmar(plan) {
+function ejecutarConfirmacion(planFinal) {
   const btn = document.getElementById('confirm-btn');
-  const sel = plan || "Plan de Pololeo";
+  const msg = encodeURIComponent(`¡Hola! Magda ha confirmado el plan: ${planFinal}. ❤️`);
+  const whatsappUrl = `https://wa.me/56933755577?text=${msg}`;
+
+  // Abrir WhatsApp de inmediato (evita bloqueo del navegador)
+  const win = window.open(whatsappUrl, '_blank');
+  if (!win || win.closed || typeof win.closed == 'undefined') {
+      window.location.href = whatsappUrl;
+  }
+
+  // Efectos visuales
   btn.innerText = "RESERVANDO...";
-  
   setTimeout(() => {
-    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, shapes: ['heart'], colors: ['#E50914', '#ffffff'] });
-    
-    // WhatsApp
-    const msg = encodeURIComponent(`¡Hola! Magda ha confirmado el plan: ${sel}. ❤️`);
-    window.open(`https://wa.me/56933755577?text=${msg}`);
+    confetti({ 
+        particleCount: 150, 
+        spread: 70, 
+        origin: { y: 0.6 }, 
+        shapes: ['heart'], 
+        colors: ['#E50914', '#ffffff'] 
+    });
     
     document.getElementById('detail-modal').classList.add('hidden');
     document.getElementById('home-screen').classList.add('hidden');
     document.getElementById('final-scene').classList.remove('hidden');
-  }, 1500);
+  }, 600);
 }
 </script>
 </body>
