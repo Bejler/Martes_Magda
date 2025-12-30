@@ -13,43 +13,45 @@
         .screen { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; z-index: 10; padding: 20px; box-sizing: border-box; }
         .hidden { display: none !important; }
 
-        /* Loader Bar Centrada */
+        /* Loader Bar */
         .loader-wrapper { display: flex; flex-direction: column; align-items: center; }
         .netflix-logo { color: #E50914; font-family: 'Bebas Neue'; font-size: 3.5rem; letter-spacing: -2px; margin-bottom: 20px; }
         .loader-bar-container { width: 220px; height: 4px; background: #333; border-radius: 4px; overflow: hidden; }
         .loader-bar { height: 100%; width: 50%; background: #E50914; animation: loading 2s infinite ease-in-out; position: relative; }
         @keyframes loading { from { left: -50%; } to { left: 100%; } }
 
-        /* Perfil Original */
+        /* Perfil */
         .profile-card { cursor: pointer; z-index: 20; }
         .profile-card img { width: 160px; height: 160px; border-radius: 5px; border: 3px solid transparent; transition: 0.3s; object-fit: cover; }
         .profile-card:hover img { border-color: white; transform: scale(1.05); }
 
-        /* Slider */
+        /* Slider Background */
         .slider { position: fixed; inset: 0; z-index: -1; }
         .slider::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, #141414 15%, transparent 65%); }
         .slide { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.5s ease-in-out; }
         .slide.active { opacity: 0.4; }
 
-        /* Home Content */
+        /* Movie Cards */
         .content-overlay { width: 100%; max-width: 450px; z-index: 20; }
         .main-title { font-size: 2.2rem; font-weight: 900; margin: 10px 0 30px; }
         .movie-card { background: rgba(35, 35, 35, 0.75); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 20px; border-radius: 8px; margin-bottom: 15px; text-align: left; border-left: 5px solid #E50914; cursor: pointer; }
         .badge { background: #E50914; font-size: 0.7rem; padding: 3px 7px; border-radius: 3px; font-weight: bold; display: inline-block; margin-bottom: 5px; }
 
-        /* Modal Glassmorphism */
+        /* Modal */
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 15px; }
         .modal-content { background: rgba(25, 25, 25, 0.9); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 30px; width: 100%; max-width: 380px; border-radius: 15px; position: relative; text-align: left; border: 1px solid rgba(255,255,255,0.1); }
         .meta { color: #46d369; font-weight: bold; margin: 10px 0; font-size: 0.9rem; }
 
-        /* Botones Sub-menú */
-        .options-btn { background: rgba(255,255,255,0.1); color: white; border: none; padding: 14px; width: 100%; margin-top: 10px; border-radius: 6px; cursor: pointer; text-align: left; font-size: 0.95rem; }
-        .back-btn { background: transparent; color: #E50914; font-weight: bold; border: 1px solid #E50914; text-align: center; margin-top: 15px; width: 100%; padding: 10px; border-radius: 6px; cursor: pointer; }
+        /* Botón Logo Republicano (Derecha Inferior) */
+        .republicano-btn { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; cursor: pointer; z-index: 100; transition: transform 0.3s; border-radius: 50%; background: white; padding: 5px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .republicano-btn:hover { transform: scale(1.1); }
+        .republicano-btn img { width: 100%; height: 100%; object-fit: contain; }
 
+        /* Botones Sub-menú */
+        .options-btn { background: rgba(255,255,255,0.1); color: white; border: none; padding: 14px; width: 100%; margin-top: 10px; border-radius: 6px; cursor: pointer; text-align: left; }
+        .back-btn { background: transparent; color: #E50914; font-weight: bold; border: 1px solid #E50914; text-align: center; margin-top: 15px; width: 100%; padding: 10px; border-radius: 6px; cursor: pointer; }
         .btn-confirm { background: white; color: black; border: none; padding: 16px; width: 100%; font-weight: 900; border-radius: 6px; margin-top: 25px; cursor: pointer; text-transform: uppercase; }
         .close { position: absolute; right: 15px; top: 10px; font-size: 35px; cursor: pointer; color: #888; }
-
-        /* Escena Final */
         .te-amo { font-family: 'Bebas Neue'; font-size: 4.5rem; color: #E50914; margin: 0; }
     </style>
 </head>
@@ -57,6 +59,7 @@
 
 <audio id="tudum-sound" src="https://www.myinstants.com/media/sounds/netflix-tudum.mp3"></audio>
 <audio id="bg-music" loop src="https://www.bensound.com/bensound-music/bensound-love.mp3"></audio>
+<audio id="secret-music" loop src="https://www.bensound.com/bensound-music/bensound-sunny.mp3"></audio>
 
 <div id="loading-screen" class="screen">
   <div class="loader-wrapper">
@@ -79,6 +82,7 @@
     <img src="https://i.postimg.cc/sx3G3C8p/Whats_App_Image_2025_12_29_at_12_06_35.jpg" class="slide">
     <img src="https://i.postimg.cc/QCjKjZPg/Whats_App_Image_2025_12_29_at_12_06_34(1).jpg" class="slide">
   </div>
+  
   <div class="content-overlay">
     <p style="font-size:0.7rem; letter-spacing:2px; color:#888; font-weight:900">PRODUCCIÓN ORIGINAL</p>
     <h2 class="main-title">¿Qué capítulo viviremos hoy?</h2>
@@ -94,6 +98,10 @@
       <div class="badge">Especial</div>
       <p style="margin:0"><b>Solo Tarde: Sunset & Piscina</b></p>
     </div>
+  </div>
+
+  <div class="republicano-btn" onclick="toggleSecretMusic()">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Partido_Republicano_%28Chile%2C_2019%29.svg" alt="Logo">
   </div>
 </div>
 
@@ -115,6 +123,7 @@
 
 <script>
 let currentPlanText = "Plan de Pololeo";
+let isSecretPlaying = false;
 
 // Inicio
 setTimeout(() => {
@@ -140,7 +149,22 @@ function startSlider() {
   }, 4000);
 }
 
-// Navegación de Planes (Estructura Original Recuperada)
+// Función para cambiar música con el logo
+function toggleSecretMusic() {
+  const normalMusic = document.getElementById('bg-music');
+  const secretMusic = document.getElementById('secret-music');
+
+  if (!isSecretPlaying) {
+    normalMusic.pause();
+    secretMusic.play();
+    isSecretPlaying = true;
+  } else {
+    secretMusic.pause();
+    normalMusic.play();
+    isSecretPlaying = false;
+  }
+}
+
 function openPlan(tipo) {
   const modal = document.getElementById('detail-modal');
   const title = document.getElementById('plan-title');
@@ -177,27 +201,20 @@ function openPlan(tipo) {
     currentPlanText = "Tarde de Sunset";
   }
 
-  // Lógica de WhatsApp para Móvil (Redirección directa)
   btn.onclick = function() {
     const url = "https://wa.me/56933755577?text=" + encodeURIComponent("¡Hola! Magda confirmó: " + currentPlanText + " ❤️");
-    
-    // Confeti antes de salir
     confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, shapes: ['heart'], colors: ['#E50914', '#ffffff'] });
-
-    setTimeout(() => {
-        window.location.href = url;
-    }, 600);
+    setTimeout(() => { window.location.href = url; }, 600);
   };
 }
 
 function showRestaurants() {
   const interactive = document.getElementById('interactive-section');
   interactive.innerHTML = `
-    <p style='color:#E50914; font-weight:bold; margin:10px 0; font-size:0.8rem;'>Toca para ver en Maps:</p>
-    <button class="options-btn" onclick="window.open('https://maps.app.goo.gl/FjJcb8Ac2GdD8k4PA')">📍 Siete Olas</button>
-    <button class="options-btn" onclick="window.open('https://maps.app.goo.gl/4Pm6J9sSVaRbevGu7')">📍 Tío Tomate</button>
-    <button class="options-btn" onclick="window.open('https://maps.app.goo.gl/VCddaR6HHqV13bZJ8')">📍 Alazán</button>
-    <button class="options-btn" onclick="window.open('https://maps.app.goo.gl/XEYZJiC7Ua4P2ojF8')">📍 Rocca Rolls</button>
+    <button class="options-btn" onclick="window.open('https://maps.google.com/?q=Siete+Olas+Cachagua')">📍 Siete Olas</button>
+    <button class="options-btn" onclick="window.open('https://maps.google.com/?q=Tio+Tomate+Cachagua')">📍 Tío Tomate</button>
+    <button class="options-btn" onclick="window.open('https://maps.google.com/?q=Alazan+Cachagua')">📍 Alazán</button>
+    <button class="options-btn" onclick="window.open('https://maps.google.com/?q=Rocca+Rolls+Cachagua')">📍 Rocca Rolls</button>
     <button class="back-btn" onclick="openPlan('completo')">⬅️ Volver</button>
   `;
 }
@@ -205,19 +222,14 @@ function showRestaurants() {
 function showBreakfasts() {
   const interactive = document.getElementById('interactive-section');
   interactive.innerHTML = `
-    <p style='color:#E50914; font-weight:bold; margin:10px 0; font-size:0.8rem;'>Toca para ver en Maps:</p>
-    <button class="options-btn" onclick="window.open('https://maps.app.goo.gl/tYkGB4yceaA9mCQ58')">📍 Le Mint</button>
-    <button class="options-btn" onclick="window.open('https://maps.app.goo.gl/ZvfqCANWus7zWBdz6')">📍 Bali Coffee House</button>
-    <button class="options-btn" onclick="window.open('https://maps.app.goo.gl/JVZ3Fh7qGKTWCqUQ6')">📍 Bakery Lynch</button>
+    <button class="options-btn" onclick="window.open('https://maps.google.com/?q=Le+Mint+Concon')">📍 Le Mint</button>
+    <button class="options-btn" onclick="window.open('https://maps.google.com/?q=Bali+Coffee+House+Concon')">📍 Bali Coffee House</button>
+    <button class="options-btn" onclick="window.open('https://maps.google.com/?q=Bakery+Lynch+Concon')">📍 Bakery Lynch</button>
     <button class="back-btn" onclick="openPlan('manana')">⬅️ Volver</button>
   `;
 }
 
-function updateSelection(txt) {
-    currentPlanText = txt;
-    alert("Seleccionado: " + txt);
-}
-
+function updateSelection(txt) { currentPlanText = txt; alert("Seleccionado: " + txt); }
 function closeModal() { document.getElementById('detail-modal').classList.add('hidden'); }
 </script>
 </body>
