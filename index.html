@@ -56,7 +56,7 @@
 
 <audio id="tudum-sound" src="https://www.myinstants.com/media/sounds/netflix-tudum.mp3"></audio>
 <audio id="bg-music" loop src="https://www.bensound.com/bensound-music/bensound-love.mp3"></audio>
-<audio id="secret-music" loop src="http://googleusercontent.com/file_content/0"></audio>
+<audio id="secret-music" loop src="jingle.mp3"></audio>
 
 <div id="loading-screen" class="screen">
   <div class="loader-wrapper">
@@ -152,7 +152,6 @@ function toggleSecretMusic() {
     normalMusic.pause();
     secretMusic.play().catch(()=>{});
     isSecretPlaying = true;
-    alert("¡Votando 5 por el cambio! 🇨🇱");
   } else {
     secretMusic.pause();
     normalMusic.play().catch(()=>{});
